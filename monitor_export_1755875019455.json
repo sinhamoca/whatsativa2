@@ -1,0 +1,146 @@
+{
+  "stats": {
+    "checksPerformed": 9,
+    "errorsDetected": 0,
+    "lastHealthCheck": "2025-08-22T15:03:26.595Z",
+    "paymentMonitorStatus": [
+      {
+        "timestamp": "2025-08-22T15:01:26.500Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 0,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T15:01:41.556Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 0,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T15:01:56.557Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 0,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T15:02:11.567Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 0,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T15:02:26.571Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 1,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T15:02:41.574Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 1,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T15:02:56.584Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 0,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T15:03:11.594Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 0,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T15:03:26.595Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 0,
+        "dbConnected": true
+      }
+    ],
+    "systemEvents": [
+      {
+        "timestamp": "2025-08-22T15:01:26.538Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T15:01:41.572Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T15:01:56.567Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T15:02:11.574Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T15:02:26.577Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T15:02:41.583Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T15:02:56.597Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T15:03:11.602Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T15:03:26.607Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      }
+    ]
+  },
+  "exportTime": "2025-08-22T15:03:39.455Z",
+  "summary": {
+    "totalChecks": 9,
+    "totalErrors": 0,
+    "uptime": {
+      "system": 1,
+      "paymentMonitor": 1,
+      "mercadoPago": 1
+    },
+    "currentStatus": {
+      "timestamp": "2025-08-22T15:03:26.595Z",
+      "systemRunning": true,
+      "paymentMonitorActive": true,
+      "mercadoPagoConfigured": true,
+      "pendingPayments": 0,
+      "dbConnected": true
+    }
+  }
+}

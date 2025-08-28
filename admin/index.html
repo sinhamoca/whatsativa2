@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Core System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-right: 1px solid #eee;
+        }
+
+        .tab-btn:last-child {
+            border-right: none;
+        }
+
+        .tab-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: #48bb78;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        .btn-danger {
+            background: #f56565;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        .btn-warning {
+            background: #ed8936;
+        }
+
+        .btn-warning:hover {
+            background: #dd6b20;
+        }
+
+        .btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .status-pending_payment {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+
+        .status-paid {
+            background: #bbf7d0;
+            color: #166534;
+        }
+
+        .status-completed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-failed {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+        }
+
+        .monitor-status {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .status-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #6c757d;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot.active {
+            background: #28a745;
+        }
+        
+        .status-dot.inactive {
+            background: #dc3545;
+            animation: none;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .monitor-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .monitor-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .monitor-info ul {
+            margin: 10px 0 0 20px;
+        }
+        
+        .monitor-info li {
+            margin-bottom: 8px;
+        }
+        
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .stat:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .message-preview {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .custom-message-indicator {
+            background: #d4edda;
+            color: #155724;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .default-message-indicator {
+            background: #e2e3e5;
+            color: #495057;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .nav-tabs { flex-direction: column; }
+            .tab-btn { border-right: none; border-bottom: 1px solid #eee; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .monitor-status { grid-template-columns: 1fr; }
+            .monitor-controls { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 Core System - Admin Panel</h1>
+        <p>Sistema de Ativações Automáticas com Mensagens Personalizadas</p>
+    </div>
+
+    <div class="container">
+        <div class="alert" id="alert-container"></div>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="tab-btn" onclick="showTab('products')">📱 Produtos</button>
+            <button class="tab-btn" onclick="showTab('orders')">📋 Pedidos</button>
+            <button class="tab-btn" onclick="showTab('activations')">✅ Ativações</button>
+            <button class="tab-btn" onclick="showTab('users')">👥 Usuários</button>
+            <button class="tab-btn" onclick="showTab('messages')">💬 Mensagens</button>
+            <button class="tab-btn" onclick="showTab('settings')">⚙️ Configurações</button>
+            <button class="tab-btn" onclick="showTab('monitor')">🤖 Monitor</button>
+        </nav>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <h2>📊 Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-orders">-</div>
+                    <div class="stat-label">Total de Pedidos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completed-orders">-</div>
+                    <div class="stat-label">Pedidos Concluídos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pending-orders">-</div>
+                    <div class="stat-label">Pedidos Pendentes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-revenue">R$ -</div>
+                    <div class="stat-label">Receita Total</div>
+                </div>
+            </div>
+            <button class="btn" onclick="loadDashboard()">🔄 Atualizar Dashboard</button>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="products" class="tab-content">
+            <h2>📱 Produtos</h2>
+            <button class="btn btn-success" onclick="showProductForm()">➕ Novo Produto</button>
+            <button class="btn" onclick="loadProducts()">🔄 Atualizar</button>
+            
+            <div class="table-container">
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Preço</th>
+                            <th>Status</th>
+                            <th>Mensagem</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div id="product-form" style="display: none; margin-top: 20px; background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                <h3>📝 Produto</h3>
+                <form id="product-form-element">
+                    <div class="form-group">
+                        <label>ID:</label>
+                        <input type="text" id="product-id" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome:</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição:</label>
+                        <textarea id="product-description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Preço:</label>
+                        <input type="number" id="product-price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Módulo de Ativação:</label>
+                        <input type="text" id="product-module" required>
+                    </div>
+                    <div class="form-group">
+                        <label>💬 Mensagem de Confirmação Personalizada (opcional):</label>
+                        <textarea id="product-payment-message" rows="6" placeholder="Se deixar vazio, usará a mensagem padrão. Variáveis disponíveis: {product_name}, {price}"></textarea>
+                        <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">
+                            💡 <strong>Dica:</strong> Use <code>{product_name}</code> e <code>{price}</code> como variáveis.<br>
+                            📝 Esta mensagem será enviada quando o pagamento for confirmado.
+                        </small>
+                        <button type="button" class="btn btn-warning" onclick="previewProductMessage()" style="margin-top: 10px;">👁️ Visualizar</button>
+                    </div>
+                    <div id="message-preview-container" style="display: none;">
+                        <label>📱 Preview:</label>
+                        <div id="message-preview" class="message-preview"></div>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="product-active" checked> Ativo</label>
+                    </div>
+                    <button type="submit" class="btn btn-success">💾 Salvar</button>
+                    <button type="button" class="btn" onclick="hideProductForm()">❌ Cancelar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="orders" class="tab-content">
+            <h2>📋 Pedidos</h2>
+            <button class="btn" onclick="loadOrders()">🔄 Atualizar</button>
+            <div class="table-container">
+                <table id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Produto</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Activations Tab -->
+        <div id="activations" class="tab-content">
+            <h2>✅ Ativações Concluídas</h2>
+            <div class="stats-grid" style="margin-bottom: 20px;">
+                <div class="stat-card" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                    <div class="stat-number" id="total-activations">-</div>
+                    <div class="stat-label">Total de Ativações</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);">
+                    <div class="stat-number" id="avg-processing-time">-</div>
+                    <div class="stat-label">Tempo Médio</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);">
+                    <div class="stat-number" id="credit-activations">-</div>
+                    <div class="stat-label">Com Crédito</div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <button class="btn" onclick="loadActivations()">🔄 Atualizar</button>
+                <button class="btn" onclick="exportActivations()">📥 Exportar</button>
+                <select id="activation-filter" onchange="filterActivations()" style="margin-left: 10px; padding: 8px;">
+                    <option value="all">Todas as Ativações</option>
+                    <option value="credit">Apenas com Crédito</option>
+                    <option value="recent">Últimas 24h</option>
+                    <option value="week">Última Semana</option>
+                </select>
+            </div>
+            
+            <div class="table-container">
+                <table id="activations-table">
+                    <thead>
+                        <tr>
+                            <th>📋 ID</th>
+                            <th>👤 Cliente</th>
+                            <th>🎯 Produto Ativado</th>
+                            <th>📱 Dados</th>
+                            <th>💳 Crédito</th>
+                            <th>⏱️ Tempo</th>
+                            <th>📅 Data</th>
+                            <th>🔧 Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users" class="tab-content">
+            <h2>👥 Gerenciamento de Usuários</h2>
+            
+            <div class="stats-grid" style="margin-bottom: 20px;">
+                <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="stat-number" id="total-users-count">-</div>
+                    <div class="stat-label">Total de Usuários</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                    <div class="stat-number" id="users-with-credit">-</div>
+                    <div class="stat-label">Com Crédito</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);">
+                    <div class="stat-number" id="active-users-24h">-</div>
+                    <div class="stat-label">Ativos (24h)</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);">
+                    <div class="stat-number" id="total-credit-system">R$ -</div>
+                    <div class="stat-label">Crédito Total</div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px; align-items: end;">
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: 500;">🔍 Buscar usuário:</label>
+                        <input type="text" id="user-search" placeholder="Digite chat_id..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: 500;">📊 Filtrar por status:</label>
+                        <select id="user-status-filter" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;">
+                            <option value="all">Todos os usuários</option>
+                            <option value="with_credit">Com crédito</option>
+                            <option value="active">Ativos</option>
+                            <option value="pending_payment">Pagamento pendente</option>
+                            <option value="inactive">Inativos</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="btn" onclick="loadUsers()">🔄 Atualizar</button>
+                        <button class="btn btn-success" onclick="loadUsersStats()">📊 Stats</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>👤 Chat ID</th>
+                            <th>📊 Score</th>
+                            <th>💳 Crédito</th>
+                            <th>🛒 Pedidos</th>
+                            <th>💰 Gasto Total</th>
+                            <th>⏰ Última Atividade</th>
+                            <th>🔧 Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <div id="users-pagination" style="margin-top: 20px; text-align: center;"></div>
+        </div>
+
+        <!-- Messages Tab -->
+        <div id="messages" class="tab-content">
+            <h2>💬 Mensagens Globais</h2>
+            <div class="alert alert-info" style="display: block;">
+                <strong>ℹ️ Importante:</strong> Estas são mensagens padrão. Para mensagens por produto, configure na aba Produtos.
+            </div>
+            <button class="btn" onclick="loadMessages()">🔄 Atualizar</button>
+            <div id="messages-container"></div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <h2>⚙️ Configurações</h2>
+            <form id="settings-form">
+                <div class="form-section">
+                    <h3>🔑 Mercado Pago</h3>
+                    <div class="form-group">
+                        <label>Public Key:</label>
+                        <input type="text" id="mercadoPagoPublicKey">
+                    </div>
+                    <div class="form-group">
+                        <label>Access Token:</label>
+                        <input type="password" id="mercadoPagoAccessToken">
+                    </div>
+                    <div class="form-group">
+                        <label>Ambiente:</label>
+                        <select id="mercadoPagoEnvironment">
+                            <option value="sandbox">Sandbox</option>
+                            <option value="production">Produção</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn" onclick="testMercadoPago()">🧪 Testar</button>
+                </div>
+                <div class="form-section">
+                    <h3>🌐 URLs</h3>
+                    <div class="form-group">
+                        <label>WhatsApp Bot URL:</label>
+                        <input type="text" id="whatsappBotUrl">
+                    </div>
+                    <div class="form-group">
+                        <label>Webhook URL:</label>
+                        <input type="text" id="webhookUrl">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">💾 Salvar</button>
+            </form>
+        </div>
+
+        <!-- Monitor Tab -->
+        <div id="monitor" class="tab-content">
+            <h2>🤖 Payment Monitor</h2>
+            <div class="monitor-status">
+                <div class="status-card">
+                    <h3>Status</h3>
+                    <div id="monitor-status-indicator" class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Verificando...</span>
+                    </div>
+                </div>
+                <div class="status-card">
+                    <h3>Estatísticas</h3>
+                    <div id="monitor-stats">
+                        <div class="stat">
+                            <span class="stat-label">Verificações:</span>
+                            <span id="checks-count">-</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Aprovados:</span>
+                            <span id="approved-count">-</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Erros:</span>
+                            <span id="errors-count">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="monitor-controls">
+                <button id="start-monitor-btn" class="btn btn-success" onclick="controlMonitor('start')">▶️ Iniciar</button>
+                <button id="stop-monitor-btn" class="btn btn-danger" onclick="controlMonitor('stop')">⏹️ Parar</button>
+                <button class="btn" onclick="loadMonitorStats()">🔄 Atualizar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="activation-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 12px; max-width: 600px; width: 90%; max-height: 80%; overflow-y: auto;">
+            <h3 id="modal-title">📋 Detalhes da Ativação</h3>
+            <div id="modal-content"></div>
+            <button class="btn" onclick="closeActivationModal()" style="margin-top: 20px;">❌ Fechar</button>
+        </div>
+    </div>
+
+    <div id="user-history-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 12px; max-width: 900px; width: 95%; max-height: 90%; overflow-y: auto;">
+            <h3 id="user-modal-title">👤 Histórico do Usuário</h3>
+            <div id="user-modal-content"></div>
+            <button class="btn" onclick="closeUserModal()" style="margin-top: 20px;">❌ Fechar</button>
+        </div>
+    </div>
+
+    <div id="user-actions-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 12px; max-width: 600px; width: 90%;">
+            <h3 id="actions-modal-title">🔧 Ações do Usuário</h3>
+            <div id="actions-modal-content"></div>
+            <button class="btn" onclick="closeActionsModal()" style="margin-top: 20px;">❌ Cancelar</button>
+        </div>
+    </div>
+
+    <div id="users-stats-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 12px; max-width: 800px; width: 95%; max-height: 90%; overflow-y: auto;">
+            <h3>📊 Estatísticas Detalhadas dos Usuários</h3>
+            <div id="users-stats-content"></div>
+            <button class="btn" onclick="closeUsersStatsModal()" style="margin-top: 20px;">❌ Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais
+        let currentUsersPage = 1;
+        let currentUsersData = [];
+
+        // Tab Management
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Carregar dados da aba selecionada
+            if (tabName === 'dashboard') loadDashboard();
+            if (tabName === 'products') loadProducts();
+            if (tabName === 'activations') loadActivations();
+            if (tabName === 'orders') loadOrders();
+            if (tabName === 'messages') loadMessages();
+            if (tabName === 'settings') loadSettings();
+            if (tabName === 'monitor') loadMonitorStats();
+            if (tabName === 'users') loadUsers();
+        }
+
+        // Alert System
+        function showAlert(message, type = 'info') {
+            const alertContainer = document.getElementById('alert-container');
+            alertContainer.className = `alert alert-${type}`;
+            alertContainer.textContent = message;
+            alertContainer.style.display = 'block';
+            setTimeout(() => alertContainer.style.display = 'none', 5000);
+        }
+
+        // Dashboard
+        async function loadDashboard() {
+            try {
+                const response = await fetch('/api/admin/stats');
+                const stats = await response.json();
+                document.getElementById('total-orders').textContent = stats.totalOrders || 0;
+                document.getElementById('completed-orders').textContent = stats.completedOrders || 0;
+                document.getElementById('pending-orders').textContent = stats.pendingOrders || 0;
+                document.getElementById('total-revenue').textContent = `R$ ${(stats.totalRevenue || 0).toFixed(2)}`;
+            } catch (error) {
+                showAlert('Erro ao carregar dashboard: ' + error.message, 'error');
+            }
+        }
+
+        // Products
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/admin/products');
+                const products = await response.json();
+                const tbody = document.querySelector('#products-table tbody');
+                tbody.innerHTML = '';
+                
+                products.forEach(product => {
+                    const row = document.createElement('tr');
+                    const messageIndicator = product.paymentConfirmedMessage ? 
+                        '<span class="custom-message-indicator">Personalizada</span>' : 
+                        '<span class="default-message-indicator">Padrão</span>';
+                    
+                    row.innerHTML = `
+                        <td>${product.id}</td>
+                        <td>${product.name}</td>
+                        <td>R$ ${product.price.toFixed(2)}</td>
+                        <td><span class="status-badge ${product.active ? 'status-paid' : 'status-failed'}">${product.active ? 'Ativo' : 'Inativo'}</span></td>
+                        <td>${messageIndicator}</td>
+                        <td>
+                            <button class="btn" onclick="editProduct('${product.id}')">✏️</button>
+                            <button class="btn btn-warning" onclick="testProductMessage('${product.id}')">💬</button>
+                            <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">🗑️</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                showAlert('Erro ao carregar produtos: ' + error.message, 'error');
+            }
+        }
+
+        function showProductForm() {
+            document.getElementById('product-form').style.display = 'block';
+            document.getElementById('product-form-element').reset();
+            document.getElementById('message-preview-container').style.display = 'none';
+            // Limpar o campo ID para permitir criação de novos produtos
+            document.getElementById('product-id').value = '';
+            document.getElementById('product-id').readOnly = false;
+        }
+
+        function hideProductForm() {
+            document.getElementById('product-form').style.display = 'none';
+        }
+
+        function previewProductMessage() {
+            const productName = document.getElementById('product-name').value || 'Nome do Produto';
+            const productPrice = document.getElementById('product-price').value || '0.00';
+            const customMessage = document.getElementById('product-payment-message').value.trim();
+            
+            let message = customMessage || `✅ *Pagamento confirmado!*
+
+🎯 {product_name}
+💰 R$ {price}
+
+━━━━━━━━━━━━━━━━━━━
+📝 *Agora preciso das informações para ativação:*
+
+Por favor, envie as informações necessárias para ativar o {product_name}`;
+            
+            const previewMessage = message
+                .replace(/{product_name}/g, productName)
+                .replace(/{price}/g, parseFloat(productPrice).toFixed(2));
+            
+            document.getElementById('message-preview').textContent = previewMessage;
+            document.getElementById('message-preview-container').style.display = 'block';
+        }
+
+        async function testProductMessage(productId) {
+            try {
+                const response = await fetch(`/api/admin/test-product-message/${productId}`, { method: 'POST' });
+                const result = await response.json();
+                
+                if (result.success) {
+                    const type = result.message.isCustom ? 'Personalizada' : 'Padrão';
+                    showAlert(`💬 Mensagem ${type} para ${result.product.name}:\n\n${result.message.content}`, 'success');
+                } else {
+                    showAlert('Erro ao testar: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showAlert('Erro: ' + error.message, 'error');
+            }
+        }
+
+        async function editProduct(productId) {
+            try {
+                const response = await fetch('/api/admin/products');
+                const products = await response.json();
+                const product = products.find(p => p.id === productId);
+                
+                if (product) {
+                    document.getElementById('product-id').value = product.id;
+                    document.getElementById('product-id').readOnly = true; // Impedir edição do ID
+                    document.getElementById('product-name').value = product.name;
+                    document.getElementById('product-description').value = product.description || '';
+                    document.getElementById('product-price').value = product.price;
+                    document.getElementById('product-module').value = product.activationModule;
+                    document.getElementById('product-payment-message').value = product.paymentConfirmedMessage || '';
+                    document.getElementById('product-active').checked = product.active;
+                    showProductForm();
+                }
+            } catch (error) {
+                showAlert('Erro: ' + error.message, 'error');
+            }
+        }
+
+        async function saveProduct(productData) {
+            try {
+                const response = await fetch('/api/admin/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                });
+
+                if (response.ok) {
+                    const msg = productData.paymentConfirmedMessage ? ' com mensagem personalizada' : '';
+                    showAlert(`Produto salvo${msg}!`, 'success');
+                    hideProductForm();
+                    loadProducts();
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Erro ao salvar produto');
+                }
+            } catch (error) {
+                showAlert('Erro ao salvar produto: ' + error.message, 'error');
+            }
+        }
+
+        async function deleteProduct(id) {
+            if (confirm('Excluir produto?')) {
+                try {
+                    const response = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
+                    if (response.ok) {
+                        showAlert('Produto excluído!', 'success');
+                        loadProducts();
+                    } else {
+                        throw new Error('Erro ao excluir produto');
+                    }
+                } catch (error) {
+                    showAlert('Erro: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // Orders
+        async function loadOrders() {
+            try {
+                const response = await fetch('/api/admin/orders');
+                const orders = await response.json();
+                const tbody = document.querySelector('#orders-table tbody');
+                tbody.innerHTML = '';
+                
+                orders.forEach(order => {
+                    const row = document.createElement('tr');
+                    let actionsHtml = `<button class="btn" onclick="viewOrder('${order.id}')">👁️</button>`;
+                    
+                    if (order.status === 'pending_payment') {
+                        actionsHtml += `
+                            <button class="btn btn-success" onclick="verifyPayment('${order.id}')">🔍 Verificar</button>
+                            <button class="btn" onclick="approvePayment('${order.id}')">✅ Aprovar</button>
+                            <button class="btn btn-danger" onclick="forceApprove('${order.id}')">⚡ Forçar</button>
+                        `;
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${order.id.substring(0, 8)}...</td>
+                        <td>${order.chatId.substring(0, 15)}...</td>
+                        <td>${order.product.name}</td>
+                        <td>R$ ${order.product.price.toFixed(2)}</td>
+                        <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+                        <td>${new Date(order.createdAt).toLocaleString()}</td>
+                        <td>${actionsHtml}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                showAlert('Erro ao carregar pedidos: ' + error.message, 'error');
+            }
+        }
+
+        async function verifyPayment(orderId) {
+            try {
+                const response = await fetch(`/api/payment/verify/${orderId}`, { method: 'POST' });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert(`Pagamento verificado! Status: ${result.paymentStatus.status}`, 'success');
+                    loadOrders();
+                } else {
+                    showAlert(`Erro: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showAlert('Erro: ' + error.message, 'error');
+            }
+        }
+
+        async function approvePayment(orderId) {
+            if (confirm('Aprovar pagamento?')) {
+                try {
+                    const response = await fetch(`/api/admin/orders/${orderId}/approve`, { method: 'POST' });
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        const status = result.paymentVerified ? 'verificado no MP' : 'manual';
+                        showAlert(`Pagamento aprovado (${status})! Mensagem personalizada enviada.`, 'success');
+                        loadOrders();
+                    } else {
+                        showAlert(`Erro: ${result.error}`, 'error');
+                    }
+                } catch (error) {
+                    showAlert('Erro: ' + error.message, 'error');
+                }
+            }
+        }
+
+        async function forceApprove(orderId) {
+            if (confirm('FORÇAR aprovação?')) {
+                try {
+                    const response = await fetch(`/api/admin/orders/${orderId}/approve`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ force: true })
+                    });
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showAlert('Pagamento forçado! Mensagem personalizada enviada.', 'success');
+                        loadOrders();
+                    } else {
+                        showAlert(`Erro: ${result.error}`, 'error');
+                    }
+                } catch (error) {
+                    showAlert('Erro: ' + error.message, 'error');
+                }
+            }
+        }
+
+        function viewOrder(orderId) {
+            showAlert(`Visualizando: ${orderId}`, 'info');
+        }
+
+        // Activations (funcionalidade stub)
+        async function loadActivations() {
+            try {
+                showAlert('Carregando ativações...', 'info');
+                const response = await fetch('/api/admin/activations/completed');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                let activations = Array.isArray(data) ? data : (data.activations || []);
+                
+                updateActivationStats(activations);
+                
+                const tbody = document.querySelector('#activations-table tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    
+                    if (activations.length === 0) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 40px; color: #666;">
+                                    📭 Nenhuma ativação encontrada
+                                </td>
+                            </tr>
+                        `;
+                    } else {
+                        activations.forEach(activation => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td><code>${(activation.id || '').substring(0, 8)}...</code></td>
+                                <td><code>${(activation.chatId || '').substring(0, 12)}...</code></td>
+                                <td>${activation.activatedProductName || 'N/A'}</td>
+                                <td><code>${(activation.activationData || 'N/A').substring(0, 30)}...</code></td>
+                                <td>${activation.creditUsed ? 'Via Crédito' : 'Normal'}</td>
+                                <td>${activation.processingTime || 'N/A'}</td>
+                                <td>${activation.completedAt ? new Date(activation.completedAt).toLocaleString('pt-BR') : 'N/A'}</td>
+                                <td>
+                                    <button class="btn" onclick="viewActivationDetails('${activation.id}')" title="Ver detalhes">👁️</button>
+                                </td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+                
+                showAlert(`✅ ${activations.length} ativações carregadas`, 'success');
+                
+            } catch (error) {
+                console.error('Erro ao carregar ativações:', error);
+                showAlert('Erro ao carregar ativações: ' + error.message, 'error');
+            }
+        }
+
+        function updateActivationStats(activations) {
+            if (!Array.isArray(activations)) return;
+            
+            const totalActivations = activations.length;
+            const creditActivations = activations.filter(a => a.creditUsed).length;
+            
+            const totalElement = document.getElementById('total-activations');
+            const creditElement = document.getElementById('credit-activations');
+            const avgElement = document.getElementById('avg-processing-time');
+            
+            if (totalElement) totalElement.textContent = totalActivations;
+            if (creditElement) creditElement.textContent = creditActivations;
+            if (avgElement) avgElement.textContent = 'N/A'; // Simplified for now
+        }
+
+        function filterActivations() {
+            loadActivations(); // Simplified - reload all data
+        }
+
+        function exportActivations() {
+            showAlert('Funcionalidade de exportação em desenvolvimento', 'info');
+        }
+
+        function viewActivationDetails(activationId) {
+            showAlert(`Visualizando detalhes da ativação: ${activationId}`, 'info');
+        }
+
+        function closeActivationModal() {
+            document.getElementById('activation-modal').style.display = 'none';
+        }
+
+        // Users - Funcionalidade Completa Restaurada
+        async function loadUsers(page = 1) {
+            try {
+                showAlert('Carregando usuários...', 'info');
+                
+                const search = document.getElementById('user-search').value.trim();
+                const status = document.getElementById('user-status-filter').value;
+                
+                const params = new URLSearchParams({
+                    page: page,
+                    limit: 50,
+                    search: search,
+                    status: status
+                });
+                
+                const response = await fetch(`/api/admin/users?${params}`);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro ao carregar usuários');
+                }
+                
+                currentUsersPage = page;
+                currentUsersData = data.users;
+                
+                // Atualizar estatísticas do cabeçalho
+                updateUsersHeaderStats(data.summary);
+                
+                // Atualizar tabela
+                updateUsersTable(data.users);
+                
+                // Atualizar paginação
+                updateUsersPagination(data.pagination);
+                
+                showAlert(`${data.users.length} usuários carregados`, 'success');
+                
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+                showAlert('Erro ao carregar usuários: ' + error.message, 'error');
+            }
+        }
+
+        // Atualizar estatísticas do cabeçalho
+        function updateUsersHeaderStats(summary) {
+            const elements = {
+                'total-users-count': summary.totalUsers || 0,
+                'users-with-credit': summary.withCredit || 0,
+                'active-users-24h': summary.active || 0,
+                'total-credit-system': `R$ ${(summary.totalCreditInSystem || 0).toFixed(2)}`
+            };
+            
+            Object.entries(elements).forEach(([id, value]) => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = value;
+            });
+        }
+
+        // Atualizar tabela de usuários
+        function updateUsersTable(users) {
+            const tbody = document.querySelector('#users-table tbody');
+            tbody.innerHTML = '';
+            
+            if (users.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #666;">
+                            👥 Nenhum usuário encontrado
+                            <br><small>Tente ajustar os filtros de busca</small>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                
+                // Status badge
+                const statusBadge = getStatusBadge(user.status);
+                
+                // Score com cor
+                const scoreColor = user.score >= 70 ? '#28a745' : user.score >= 40 ? '#ffc107' : '#dc3545';
+                const scoreDisplay = `<span style="color: ${scoreColor}; font-weight: bold;">${user.score}/100</span>`;
+                
+                // Crédito
+                const creditDisplay = user.availableCredit > 0 ? 
+                    `<span style="color: #28a745; font-weight: bold;">R$ ${user.availableCredit.toFixed(2)}</span>` : 
+                    '<span style="color: #6c757d;">R$ 0,00</span>';
+                
+                // Estatísticas de pedidos
+                const ordersStats = `${user.stats.completedOrders}/${user.stats.totalOrders}`;
+                
+                // Última atividade
+                const lastActivity = user.lastActivity ? 
+                    new Date(user.lastActivity).toLocaleString('pt-BR') : 'Nunca';
+                
+                row.innerHTML = `
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <code style="font-size: 11px;">${user.chatId.substring(0, 15)}...</code>
+                            ${statusBadge}
+                        </div>
+                    </td>
+                    <td>${scoreDisplay}</td>
+                    <td>${creditDisplay}</td>
+                    <td>
+                        <span title="Concluídos/Total">${ordersStats}</span>
+                        ${user.stats.creditOrders > 0 ? `<br><small style="color: #28a745;">💳 ${user.stats.creditOrders} via crédito</small>` : ''}
+                    </td>
+                    <td>
+                        <strong>R$ ${user.stats.totalSpent.toFixed(2)}</strong>
+                    </td>
+                    <td style="font-size: 12px;">
+                        ${lastActivity}
+                    </td>
+                    <td>
+                        <button class="btn" onclick="viewUserHistory('${user.chatId}')" title="Ver histórico">👁️</button>
+                        <button class="btn btn-warning" onclick="showUserActions('${user.chatId}')" title="Ações">🔧</button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Obter badge de status
+        function getStatusBadge(status) {
+            const badges = {
+                'with_credit': '<span class="status-badge status-paid">💳 Com Crédito</span>',
+                'active': '<span class="status-badge status-completed">✅ Ativo</span>',
+                'pending_payment': '<span class="status-badge status-pending_payment">⏳ Pendente</span>',
+                'inactive': '<span class="status-badge status-failed">😴 Inativo</span>'
+            };
+            
+            return badges[status] || '<span class="status-badge">❓ Desconhecido</span>';
+        }
+
+        // Atualizar paginação
+        function updateUsersPagination(pagination) {
+            const container = document.getElementById('users-pagination');
+            
+            if (pagination.totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let paginationHTML = '<div style="display: flex; justify-content: center; gap: 5px; align-items: center;">';
+            
+            // Botão anterior
+            if (pagination.page > 1) {
+                paginationHTML += `<button class="btn" onclick="loadUsers(${pagination.page - 1})">◀️ Anterior</button>`;
+            }
+            
+            // Números das páginas
+            const startPage = Math.max(1, pagination.page - 2);
+            const endPage = Math.min(pagination.totalPages, pagination.page + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const isActive = i === pagination.page;
+                const buttonClass = isActive ? 'btn btn-success' : 'btn';
+                paginationHTML += `<button class="${buttonClass}" onclick="loadUsers(${i})">${i}</button>`;
+            }
+            
+            // Botão próximo
+            if (pagination.page < pagination.totalPages) {
+                paginationHTML += `<button class="btn" onclick="loadUsers(${pagination.page + 1})">Próximo ▶️</button>`;
+            }
+            
+            paginationHTML += `<span style="margin-left: 20px; color: #666;">Página ${pagination.page} de ${pagination.totalPages} (${pagination.total} usuários)</span>`;
+            paginationHTML += '</div>';
+            
+            container.innerHTML = paginationHTML;
+        }
+
+        // Ver histórico detalhado do usuário
+        async function viewUserHistory(chatId) {
+            try {
+                showAlert('Carregando histórico...', 'info');
+                
+                const response = await fetch(`/api/admin/users/${chatId}/history`);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro ao carregar histórico');
+                }
+                
+                document.getElementById('user-modal-title').textContent = `👤 Histórico: ${chatId.substring(0, 20)}...`;
+                
+                // Construir conteúdo do modal
+                let modalContent = `
+                    <div style="display: grid; gap: 20px;">
+                        <!-- Resumo do usuário -->
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <h4>📊 Resumo</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                                <div>
+                                    <strong>Score:</strong> ${data.score}/100<br>
+                                    <strong>Crédito:</strong> R$ ${data.session.availableCredit.toFixed(2)}<br>
+                                    <strong>Estado:</strong> ${data.session.state || 'Nenhum'}
+                                </div>
+                                <div>
+                                    <strong>Total Pedidos:</strong> ${data.stats.totalOrders}<br>
+                                    <strong>Concluídos:</strong> ${data.stats.completedOrders}<br>
+                                    <strong>Falhados:</strong> ${data.stats.failedOrders}
+                                </div>
+                                <div>
+                                    <strong>Gasto Total:</strong> R$ ${data.stats.totalSpent.toFixed(2)}<br>
+                                    <strong>Via Crédito:</strong> ${data.stats.creditOrdersCount}<br>
+                                    <strong>Tempo Médio:</strong> ${data.stats.averageProcessingTime || 'N/A'}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Insights -->
+                        ${data.insights.length > 0 ? `
+                        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+                            <h4>💡 Insights</h4>
+                            ${data.insights.map(insight => `
+                                <div style="margin-bottom: 8px;">
+                                    <span class="status-badge status-${insight.level === 'warning' ? 'pending_payment' : insight.level === 'success' ? 'completed' : 'paid'}">
+                                        ${insight.type}
+                                    </span>
+                                    ${insight.message}
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Histórico de pedidos -->
+                        <div>
+                            <h4>📋 Histórico de Pedidos (${data.orders.length})</h4>
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                ${data.orders.map(order => `
+                                    <div style="border: 1px solid #dee2e6; padding: 10px; margin-bottom: 10px; border-radius: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <strong>${order.product.name}</strong>
+                                            <span class="status-badge status-${order.status}">${order.status}</span>
+                                        </div>
+                                        <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                            💰 R$ ${order.product.price.toFixed(2)} | 
+                                            📅 ${new Date(order.createdAt).toLocaleString('pt-BR')} |
+                                            ⏱️ ${order.processingTime}
+                                            ${order.creditUsed ? ' | 💳 Via crédito' : ''}
+                                        </div>
+                                        ${order.error ? `<div style="color: #dc3545; font-size: 12px; margin-top: 5px;">❌ ${order.error}</div>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('user-modal-content').innerHTML = modalContent;
+                document.getElementById('user-history-modal').style.display = 'block';
+                
+                showAlert('Histórico carregado', 'success');
+                
+            } catch (error) {
+                console.error('Erro ao carregar histórico:', error);
+                showAlert('Erro ao carregar histórico: ' + error.message, 'error');
+            }
+        }
+
+        // Mostrar ações do usuário
+        function showUserActions(chatId) {
+            const user = currentUsersData.find(u => u.chatId === chatId);
+            
+            if (!user) {
+                showAlert('Usuário não encontrado', 'error');
+                return;
+            }
+            
+            document.getElementById('actions-modal-title').textContent = `🔧 Ações: ${chatId.substring(0, 20)}...`;
+            
+            const actionsContent = `
+                <div style="display: grid; gap: 15px;">
+                    <!-- Ajustar Crédito -->
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <h4>💳 Ajustar Crédito</h4>
+                        <p style="font-size: 14px; color: #666; margin-bottom: 10px;">
+                            Crédito atual: <strong>R$ ${user.availableCredit.toFixed(2)}</strong>
+                        </p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
+                            <div>
+                                <label>Valor:</label>
+                                <input type="number" id="credit-amount" step="0.01" min="0" placeholder="0.00" style="width: 100%; padding: 8px;">
+                            </div>
+                            <div>
+                                <label>Operação:</label>
+                                <select id="credit-operation" style="width: 100%; padding: 8px;">
+                                    <option value="set">Definir</option>
+                                    <option value="add">Adicionar</option>
+                                    <option value="subtract">Subtrair</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button class="btn btn-warning" onclick="adjustUserCredit('${chatId}')">💳 Aplicar</button>
+                            </div>
+                        </div>
+                        <input type="text" id="credit-reason" placeholder="Motivo (opcional)" style="width: 100%; padding: 8px; margin-top: 10px;">
+                    </div>
+                    
+                    <!-- Outras Ações -->
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px;">
+                        <h4>🛠️ Outras Ações</h4>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn" onclick="resetUserSession('${chatId}', true)">🔄 Reset (manter crédito)</button>
+                            <button class="btn btn-warning" onclick="resetUserSession('${chatId}', false)">🔄 Reset completo</button>
+                        </div>
+                        <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                            <strong>Nota:</strong> Função "Enviar Mensagem" temporariamente indisponível.
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('actions-modal-content').innerHTML = actionsContent;
+            document.getElementById('user-actions-modal').style.display = 'block';
+        }
+
+        // Ajustar crédito do usuário
+        async function adjustUserCredit(chatId) {
+            try {
+                const amount = parseFloat(document.getElementById('credit-amount').value);
+                const operation = document.getElementById('credit-operation').value;
+                const reason = document.getElementById('credit-reason').value.trim();
+                
+                if (isNaN(amount) || amount < 0) {
+                    showAlert('Valor inválido', 'error');
+                    return;
+                }
+                
+                const response = await fetch(`/api/admin/users/${chatId}/adjust-credit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount, operation, reason })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert(`Crédito ajustado: R$ ${result.details.originalCredit.toFixed(2)} → R$ ${result.details.newCredit.toFixed(2)}`, 'success');
+                    closeActionsModal();
+                    loadUsers(currentUsersPage); // Recarregar lista
+                } else {
+                    showAlert('Erro: ' + result.error, 'error');
+                }
+                
+            } catch (error) {
+                showAlert('Erro ao ajustar crédito: ' + error.message, 'error');
+            }
+        }
+
+        // Reset de sessão do usuário
+        async function resetUserSession(chatId, preserveCredit) {
+            const action = preserveCredit ? 'resetar sessão (mantendo crédito)' : 'resetar sessão completamente';
+            
+            if (!confirm(`Tem certeza que deseja ${action} para este usuário?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/users/${chatId}/reset-session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ preserveCredit })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Sessão resetada com sucesso!', 'success');
+                    closeActionsModal();
+                    loadUsers(currentUsersPage);
+                } else {
+                    showAlert('Erro: ' + result.error, 'error');
+                }
+                
+            } catch (error) {
+                showAlert('Erro ao resetar sessão: ' + error.message, 'error');
+            }
+        }
+
+        // Carregar estatísticas detalhadas
+        async function loadUsersStats() {
+            try {
+                showAlert('Carregando estatísticas...', 'info');
+                
+                const response = await fetch('/api/admin/users/stats');
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro ao carregar estatísticas');
+                }
+                
+                const statsContent = `
+                    <div style="display: grid; gap: 20px;">
+                        <!-- Resumo Geral -->
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <h4>📊 Resumo Geral</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div>
+                                    <strong>Total de usuários:</strong> ${data.summary.totalUsers}<br>
+                                    <strong>Com crédito ativo:</strong> ${data.summary.usersWithCredit}<br>
+                                    <strong>Crédito médio:</strong> R$ ${data.summary.averageCreditPerUser}
+                                </div>
+                                <div>
+                                    <strong>Crédito total no sistema:</strong> R$ ${data.summary.totalCreditInSystem.toFixed(2)}<br>
+                                    <strong>Taxa de retenção (30d):</strong> ${data.activity.retentionRate}%
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Atividade -->
+                        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+                            <h4>📈 Atividade</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                                <div>
+                                    <strong>Últimas 24h:</strong> ${data.activity.last24h} usuários
+                                </div>
+                                <div>
+                                    <strong>Últimos 7 dias:</strong> ${data.activity.last7days} usuários
+                                </div>
+                                <div>
+                                    <strong>Últimos 30 dias:</strong> ${data.activity.last30days} usuários
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Estados mais comuns -->
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 8px;">
+                            <h4>🎯 Estados mais comuns</h4>
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                ${data.commonStates.map(state => `
+                                    <span style="background: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">
+                                        ${state.state}: ${state.count}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('users-stats-content').innerHTML = statsContent;
+                document.getElementById('users-stats-modal').style.display = 'block';
+                
+                showAlert('Estatísticas carregadas', 'success');
+                
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+                showAlert('Erro ao carregar estatísticas: ' + error.message, 'error');
+            }
+        }
+
+        // Filtrar usuários em tempo real
+        function filterUsers() {
+            loadUsers(1); // Voltar para página 1 ao filtrar
+        }
+
+        // Fechar modais
+        function closeUserModal() {
+            document.getElementById('user-history-modal').style.display = 'none';
+        }
+
+        function closeActionsModal() {
+            document.getElementById('user-actions-modal').style.display = 'none';
+        }
+
+        function closeUsersStatsModal() {
+            document.getElementById('users-stats-modal').style.display = 'none';
+        }
+
+        // Messages
+        async function loadMessages() {
+            try {
+                const response = await fetch('/api/admin/messages');
+                const messages = await response.json();
+                const container = document.getElementById('messages-container');
+                container.innerHTML = '';
+                
+                messages.forEach(message => {
+                    const div = document.createElement('div');
+                    div.className = 'form-section';
+                    div.innerHTML = `
+                        <h4>${message.type}</h4>
+                        <textarea rows="4" style="width: 100%; margin-bottom: 10px;" id="message-${message.type}">${message.content}</textarea>
+                        <button class="btn" onclick="saveMessage('${message.type}')">💾 Salvar</button>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch (error) {
+                showAlert('Erro ao carregar mensagens: ' + error.message, 'error');
+            }
+        }
+
+        async function saveMessage(type) {
+            try {
+                const content = document.getElementById(`message-${type}`).value;
+                const response = await fetch('/api/admin/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type, content })
+                });
+
+                if (response.ok) {
+                    showAlert('Mensagem salva!', 'success');
+                } else {
+                    throw new Error('Erro ao salvar');
+                }
+            } catch (error) {
+                showAlert('Erro: ' + error.message, 'error');
+            }
+        }
+
+        // Settings
+        async function loadSettings() {
+            try {
+                const response = await fetch('/api/admin/settings');
+                const settings = await response.json();
+                
+                Object.entries(settings).forEach(([key, value]) => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = value;
+                        } else {
+                            element.value = value;
+                        }
+                    }
+                });
+            } catch (error) {
+                showAlert('Erro ao carregar configurações: ' + error.message, 'error');
+            }
+        }
+
+        async function saveSettings(formData) {
+            try {
+                const response = await fetch('/api/admin/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    showAlert('Configurações salvas!', 'success');
+                } else {
+                    throw new Error('Erro ao salvar');
+                }
+            } catch (error) {
+                showAlert('Erro: ' + error.message, 'error');
+            }
+        }
+
+        async function testMercadoPago() {
+            try {
+                showAlert('Testando...', 'info');
+                const response = await fetch('/api/admin/test-mercadopago', { method: 'POST' });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert(`✅ Conexão OK! Usuário: ${result.email}`, 'success');
+                } else {
+                    showAlert(`❌ Erro: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showAlert('Erro no teste: ' + error.message, 'error');
+            }
+        }
+
+        // Monitor
+        async function loadMonitorStats() {
+            try {
+                const response = await fetch('/api/admin/monitor-stats');
+                const stats = await response.json();
+                
+                const statusDot = document.querySelector('.status-dot');
+                const statusText = document.querySelector('.status-text');
+                
+                if (stats.isRunning) {
+                    statusDot.className = 'status-dot active';
+                    statusText.textContent = 'Monitor Ativo';
+                } else {
+                    statusDot.className = 'status-dot inactive';
+                    statusText.textContent = 'Monitor Inativo';
+                }
+                
+                document.getElementById('checks-count').textContent = stats.checksPerformed || 0;
+                document.getElementById('approved-count').textContent = stats.paymentsApproved || 0;
+                document.getElementById('errors-count').textContent = stats.errorsCount || 0;
+                
+                const startBtn = document.getElementById('start-monitor-btn');
+                const stopBtn = document.getElementById('stop-monitor-btn');
+                startBtn.disabled = stats.isRunning;
+                stopBtn.disabled = !stats.isRunning;
+                
+            } catch (error) {
+                console.error('Erro ao carregar monitor:', error);
+            }
+        }
+
+        async function controlMonitor(action) {
+            try {
+                const response = await fetch(`/api/admin/monitor/${action}`, { method: 'POST' });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert(result.message, 'success');
+                    setTimeout(loadMonitorStats, 1000);
+                } else {
+                    showAlert(result.message || 'Erro na operação', 'error');
+                }
+            } catch (error) {
+                showAlert('Erro ao controlar monitor: ' + error.message, 'error');
+            }
+        }
+
+        // Form Handlers - ESTE É O PONTO CRUCIAL QUE ESTAVA FALTANDO!
+        document.addEventListener('DOMContentLoaded', function() {
+            // Product Form Handler
+            const productForm = document.getElementById('product-form-element');
+            if (productForm) {
+                productForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const productData = {
+                        id: document.getElementById('product-id').value.trim(),
+                        name: document.getElementById('product-name').value.trim(),
+                        description: document.getElementById('product-description').value.trim(),
+                        price: parseFloat(document.getElementById('product-price').value),
+                        activationModule: document.getElementById('product-module').value.trim(),
+                        paymentConfirmedMessage: document.getElementById('product-payment-message').value.trim() || null,
+                        active: document.getElementById('product-active').checked
+                    };
+                    
+                    // Validação básica
+                    if (!productData.id || !productData.name || !productData.price || !productData.activationModule) {
+                        showAlert('Por favor, preencha todos os campos obrigatórios', 'error');
+                        return;
+                    }
+                    
+                    if (productData.price <= 0) {
+                        showAlert('O preço deve ser maior que zero', 'error');
+                        return;
+                    }
+                    
+                    saveProduct(productData);
+                });
+            }
+
+            // Settings Form Handler
+            const settingsForm = document.getElementById('settings-form');
+            if (settingsForm) {
+                settingsForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = {
+                        mercadoPagoPublicKey: document.getElementById('mercadoPagoPublicKey').value,
+                        mercadoPagoAccessToken: document.getElementById('mercadoPagoAccessToken').value,
+                        mercadoPagoEnvironment: document.getElementById('mercadoPagoEnvironment').value,
+                        whatsappBotUrl: document.getElementById('whatsappBotUrl').value,
+                        webhookUrl: document.getElementById('webhookUrl').value
+                    };
+                    saveSettings(formData);
+                });
+            }
+
+            // Event listeners para filtros de usuários
+            const userSearch = document.getElementById('user-search');
+            if (userSearch) {
+                let searchTimeout;
+                userSearch.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        loadUsers();
+                    }, 500);
+                });
+            }
+            
+            const statusFilter = document.getElementById('user-status-filter');
+            if (statusFilter) {
+                statusFilter.addEventListener('change', loadUsers);
+            }
+
+            // Initialize
+            loadDashboard();
+            loadMonitorStats();
+            
+            // Auto-refresh monitor stats every 30 seconds
+            setInterval(loadMonitorStats, 30000);
+        });
+    </script>
+</body>
+</html>

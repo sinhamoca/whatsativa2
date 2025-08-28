@@ -1,0 +1,399 @@
+{
+  "stats": {
+    "checksPerformed": 15,
+    "errorsDetected": 0,
+    "lastHealthCheck": "2025-08-22T14:54:32.402Z",
+    "paymentMonitorStatus": [
+      {
+        "timestamp": "2025-08-22T14:51:02.255Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:51:17.298Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:51:32.308Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:51:47.319Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:52:02.322Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:52:17.333Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:52:32.343Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:52:47.353Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:53:02.354Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:53:17.364Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:53:32.374Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:53:47.382Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:54:02.382Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:54:17.392Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      },
+      {
+        "timestamp": "2025-08-22T14:54:32.402Z",
+        "systemRunning": true,
+        "paymentMonitorActive": true,
+        "mercadoPagoConfigured": true,
+        "pendingPayments": 22,
+        "dbConnected": true
+      }
+    ],
+    "systemEvents": [
+      {
+        "timestamp": "2025-08-22T14:51:32.323Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:51:32.323Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:51:47.329Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:51:47.338Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:51:47.338Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:51:47.338Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:02.330Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:02.338Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:02.339Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:02.339Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:17.340Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:17.347Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:17.347Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:17.347Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:32.350Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:32.357Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:32.357Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:32.357Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:47.362Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:47.370Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:47.370Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:52:47.370Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:02.362Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:02.368Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:02.368Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:02.368Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:17.371Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:17.377Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:17.377Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:17.377Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:32.381Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:32.387Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:32.387Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:32.387Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:47.389Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:47.396Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:47.396Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:53:47.396Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:02.389Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:02.395Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:02.395Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:02.395Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:17.398Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:17.403Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:17.403Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:17.403Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:32.412Z",
+        "level": "SUCCESS",
+        "message": "Sistema online"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:32.418Z",
+        "level": "WARNING",
+        "message": "22 pedidos pendentes há mais de 30 minutos"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:32.419Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes - possível problema no motor automático"
+      },
+      {
+        "timestamp": "2025-08-22T14:54:32.419Z",
+        "level": "WARNING",
+        "message": "⚠️ 22 pedidos pendentes há mais de 30 minutos"
+      }
+    ]
+  },
+  "exportTime": "2025-08-22T14:54:45.022Z",
+  "summary": {
+    "totalChecks": 15,
+    "totalErrors": 0,
+    "uptime": {
+      "system": 1,
+      "paymentMonitor": 1,
+      "mercadoPago": 1
+    },
+    "currentStatus": {
+      "timestamp": "2025-08-22T14:54:32.402Z",
+      "systemRunning": true,
+      "paymentMonitorActive": true,
+      "mercadoPagoConfigured": true,
+      "pendingPayments": 22,
+      "dbConnected": true
+    }
+  }
+}

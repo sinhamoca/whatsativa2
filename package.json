@@ -1,0 +1,43 @@
+{
+  "name": "core-system-api",
+  "version": "1.0.0",
+  "description": "Core System API para orquestração de ativações",
+  "main": "core-system.js",
+  "scripts": {
+    "start": "node core-system.js",
+    "dev": "nodemon core-system.js",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop core-system",
+    "pm2:restart": "pm2 restart core-system",
+    "pm2:logs": "pm2 logs core-system"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "axios-cookiejar-support": "^6.0.4",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.18.2",
+    "mercadopago": "^2.0.6",
+    "pino": "^8.17.1",
+    "pino-pretty": "^13.0.0",
+    "selenium-webdriver": "^4.34.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.6",
+    "tough-cookie": "^5.1.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "api",
+    "core-system",
+    "automation",
+    "payments"
+  ],
+  "author": "Seu Nome",
+  "license": "MIT"
+}
